@@ -57,9 +57,8 @@ RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php/5.6/fpm/php.
 	sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" /etc/php/5.6/fpm/pool.d/www.conf && \
 	sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" /etc/php/5.6/fpm/pool.d/www.conf && \
 	sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" /etc/php/5.6/fpm/pool.d/www.conf && \
-	DEFAULT_TIMEZONE=Europe\/Vilnius/ && \
-	sed -i "s/;date.timezone =.*/date.timezone = $DEFAULT_TIMEZONE" /etc/php/5.6/fpm/php.ini && \
-	sed -i "s/;date.timezone =.*/date.timezone = $DEFAULT_TIMEZONE" /etc/php/5.6/cli/php.ini
+	sed -i "s/;date.timezone =.*/date.timezone = Europe\/Vilnius/" /etc/php/5.6/fpm/php.ini && \
+	sed -i "s/;date.timezone =.*/date.timezone = Europe\/Vilnius/" /etc/php/5.6/cli/php.ini
 
 # Ownership of sock file for PHP-FPM
 RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php/5.6/fpm/pool.d/www.conf && \
