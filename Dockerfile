@@ -3,8 +3,7 @@ FROM ubuntu:14.04.5
 MAINTAINER Donatas Navidonskis <donatas@navidonskis.com>
 
 ENV DEFAULT_LOCALE=en_US \
-	NGINX_VERSION=stable \
-	EXTRA_PACKAGES="php5.6-mysql php5.6-gd php5.6-intl php5.6-mcrypt php5.6-mbstring php5.6-tidy"
+	NGINX_VERSION=stable
 
 # let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
@@ -25,9 +24,8 @@ RUN apt-get update && \
 	add-apt-repository ppa:ondrej/php && \
 	apt-get update && \
 	apt-get upgrade -y && \
-	BUILD_PACKAGES="supervisor nginx php5.6-fpm php5.6-cli php5.6-curl php-apc git curl pwgen" && \
+	BUILD_PACKAGES="supervisor nginx php5.6-fpm php5.6-cli php5.6-curl php-apc git curl pwgen php5.6-xmlrpc php5.6-mysql php5.6-gd php5.6-intl php5.6-mcrypt php5.6-mbstring php5.6-tidy" && \
 	apt-get -y install $BUILD_PACKAGES && \
-	apt-get -y install ${EXTRA_PACKAGES} && \
 	apt-get remove --purge -y software-properties-common && \
 	apt-get autoremove -y && \
 	apt-get clean && \
