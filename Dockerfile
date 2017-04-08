@@ -2,6 +2,10 @@ FROM ubuntu:14.04.5
 
 MAINTAINER Donatas Navidonskis <donatas@navidonskis.com>
 
+ENV DEFAULT_LOCALE=en_US \
+	NGINX_VERSION=stable \
+	EXTRA_PACKAGES="php5.6-mysql php5.6-gd php5.6-intl php5.6-mcrypt php5.6-mbstring php5.6-tidy"
+
 # let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,20 +14,20 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
 # Setup default locale
-RUN DEFAULT_LOCALE=en_US.UTF-8 && \
-	locale-gen $DEFAULT_LOCALE && \
-	export LANG=$DEFAULT_LOCALE
+RUN locale-gen ${DEFAULT_LOCALE}.UTF-8 && \
+	export LANG=${DEFAULT_LOCALE}.UTF-8
 
 RUN apt-get update && \
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4F4EA0AAE5267A6C && \
 	apt-get install -y software-properties-common && \
 	NGINX=stable && \
-	add-apt-repository ppa:nginx/$NGINX && \
+	add-apt-repository ppa:nginx/${NGINX_VERSION} && \
 	add-apt-repository ppa:ondrej/php && \
 	apt-get update && \
 	apt-get upgrade -y && \
-	PACKAGES="supervisor nginx php5.6-fpm git php5.6-mysql php-apc php5.6-curl php5.6-gd php5.6-intl php5.6-mcrypt php5.6-mbstring php5.6-memcache php5.6-sqlite php5.6-tidy php5.6-xmlrpc php5.6-xsl php5.6-pgsql php5.6-mongo php5.6-ldap pwgen php5.6-cli curl" && \
-	apt-get -y install $PACKAGES && \
+	BUILD_PACKAGES="supervisor nginx php5.6-fpm php5.6-cli php5.6-curl php-apc git curl pwgen" && \
+	apt-get -y install $BUILD_PACKAGES && \
+	apt-get -y install ${EXTRA_PACKAGES} && \
 	apt-get remove --purge -y software-properties-common && \
 	apt-get autoremove -y && \
 	apt-get clean && \
