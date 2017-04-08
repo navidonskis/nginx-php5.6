@@ -42,7 +42,7 @@ RUN rm -rf /var/lib/apt/lists/* \
 # Nginx configuration
 RUN sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf && \
 	sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf && \
-	sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf && \
+	sed -i -e"s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 128m;\n\tproxy_buffer_size 256k;proxy_buffers 4 512k;proxy_busy_buffers_size 512k;/" /etc/nginx/nginx.conf && \
 	echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # PHP-FPM configuration
