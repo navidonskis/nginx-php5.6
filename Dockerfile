@@ -34,6 +34,11 @@ RUN apt-get update && \
 	rm -rf /usr/share/man/??_* && \
 	curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
+# install extra tools
+RUN apt-get install -y \
+	vim \
+	mc
+
 # clean temporary files
 RUN rm -rf /var/lib/apt/lists/* \
 	/tmp/* \
