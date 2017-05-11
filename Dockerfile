@@ -101,4 +101,4 @@ RUN crontab /etc/cron.d/crontasks
 # Expose Ports
 EXPOSE 80
 
-CMD ["/bin/bash", "/cmd.sh", "cron"]
+CMD ["/bin/bash", "/cmd.sh"]
