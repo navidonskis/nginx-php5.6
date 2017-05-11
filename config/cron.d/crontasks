@@ -1,3 +1,4 @@
-#min hour day month weekday command
-
-#*/1   *    *    *    *     <your command>
+# ----+------+-----+-------+---------+---------+
+# min | hour | day | month | weekday | command |
+# ----+------+-----+-------+---------+---------+
+# */1    *      *      *       *     <your command>
