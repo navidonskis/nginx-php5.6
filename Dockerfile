@@ -95,8 +95,7 @@ RUN chown -Rf www-data.www-data /var/www
 
 # Cron Job settings
 ADD ./config/cron.d/crontasks /etc/cron.d/crontasks
-# Init crontab
-RUN crontab /etc/cron.d/crontasks
+RUN chmod 0644 /etc/cron.d/crontasks
 
 # Expose Ports
 EXPOSE 80
