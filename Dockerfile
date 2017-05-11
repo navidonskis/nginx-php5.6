@@ -93,7 +93,12 @@ RUN mkdir -p /var/www
 COPY ./www/ /var/www
 RUN chown -Rf www-data.www-data /var/www
 
+# Cron Job settings
+ADD ./config/cron.d/crontasks /etc/cron.d/crontasks
+# Init crontab
+RUN crontab /etc/cron.d/crontasks
+
 # Expose Ports
 EXPOSE 80
 
-CMD ["/bin/bash", "/cmd.sh"]
+CMD ["/bin/bash", "/cmd.sh", "cron"]
