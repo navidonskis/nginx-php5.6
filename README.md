@@ -13,24 +13,24 @@ Docker container based on `Ubuntu 14.04.5` version. Using `nginx stable` version
 Creating container via `docker-compose` file.
 
 ```yaml
-	web:
-		image: navidonskis/nginx-php5.6
-		container_name: web
-		restart: always
-		volumes:
-			# 1. mount your workdir path
-			- /var/www:/var/www
-			# 2. mount your configuration of site
-			- /mnt/docker/nginx/sites-enabled:/etc/nginx/sites-enabled
-			# 3. if you have settings for ssmtp
-			- /mnt/docker/nginx/ssmtp/ssmtp.conf:/etc/ssmtp/ssmtp.conf
-			# 4. if you want to override php.ini file
-			- /mnt/docker/php/custom.ini:/etc/php/5.6/fpm/conf.d/custom.ini
-		# 5. have a cronjob tasks? run the command...
-		command:
-			# remember to escape variables dollar sign with duplication $$ instead $
-			- '* * * * * echo "Hello $$(date)" >> /var/log/cron.log 2>&1'
-      		- '* * * * * echo "Hello world !" >> /var/log/cron.log 2>&1'
+  web:
+    image: navidonskis/nginx-php5.6
+    container_name: web
+    restart: always
+    volumes:
+      # 1. mount your workdir path
+      - /var/www:/var/www
+      # 2. mount your configuration of site
+      - /mnt/docker/nginx/sites-enabled:/etc/nginx/sites-enabled
+      # 3. if you have settings for ssmtp
+      - /mnt/docker/nginx/ssmtp/ssmtp.conf:/etc/ssmtp/ssmtp.conf
+      # 4. if you want to override php.ini file
+      - /mnt/docker/php/custom.ini:/etc/php/5.6/fpm/conf.d/custom.ini
+    # 5. have a cronjob tasks? run the command...
+   command:
+      # remember to escape variables dollar sign with duplication $$ instead $
+      - '* * * * * echo "Hello $$(date)" >> /var/log/cron.log 2>&1'
+      - '* * * * * echo "Hello world !" >> /var/log/cron.log 2>&1'
 ```
 
 ### Explanations
