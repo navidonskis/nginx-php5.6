@@ -9,11 +9,10 @@ ENV DEFAULT_LOCALE=en_US \
 ENV DEBIAN_FRONTEND noninteractive
 
 # Surpress Upstart errors/warning
-RUN dpkg-divert --local --rename --add /sbin/initctl
-RUN ln -sf /bin/true /sbin/initctl
-
-# Setup default locale
-RUN locale-gen ${DEFAULT_LOCALE}.UTF-8 && \
+RUN dpkg-divert --local --rename --add /sbin/initctl && \
+	ln -sf /bin/true /sbin/initctl && \
+	# Setup default locale
+	locale-gen ${DEFAULT_LOCALE}.UTF-8 && \
 	export LANG=${DEFAULT_LOCALE}.UTF-8
 
 RUN apt-get update && \
@@ -34,12 +33,9 @@ RUN apt-get update && \
 	rm -rf /var/lib/apt/lists/* && \
 	rm -rf /usr/share/man/?? && \
 	rm -rf /usr/share/man/??_* && \
-	curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
-
-# clean temporary files
-RUN rm -rf /var/lib/apt/lists/* \
-	/tmp/* \
-	/var/tmp/*
+	curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
+	# clean temporary files
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Nginx configuration
 RUN sed -i -e"s/worker_processes  1/worker_processes 5/" /etc/nginx/nginx.conf && \
