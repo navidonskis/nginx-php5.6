@@ -10,7 +10,6 @@ if [ -n "$1" ]; then
   done
 fi
 
-cp /etc/cron.d/crontasks /tmp/temp.txt
 chmod 600 /etc/cron.d/crontasks
 crontab /etc/cron.d/crontasks
 

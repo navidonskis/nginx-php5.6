@@ -27,7 +27,7 @@ Creating container via `docker-compose` file.
       # 4. if you want to override php.ini file
       - /mnt/docker/php/custom.ini:/etc/php/5.6/fpm/conf.d/custom.ini
     # 5. have a cronjob tasks? run the command...
-   command:
+    command:
       # remember to escape variables dollar sign with duplication $$ instead $
       - '* * * * * echo "Hello $$(date)" >> /var/log/cron.log 2>&1'
       - '* * * * * echo "Hello world !" >> /var/log/cron.log 2>&1'
