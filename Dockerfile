@@ -93,12 +93,14 @@ RUN mkdir -p /var/www
 COPY ./www/ /var/www
 RUN chown -Rf www-data.www-data /var/www
 
-# Cron Job settings
+# default cronjob file
 ADD ./config/cron.d/crontasks /etc/cron.d/crontasks
-RUN chmod 0644 /etc/cron.d/crontasks
-RUN crontab /etc/cron.d/crontasks
+COPY ./config/cron.sh /
+RUN touch /var/log/cron.log
+RUN chmod +x /cron.sh
 
 # Expose Ports
 EXPOSE 80
 
+ENTRYPOINT ["/cron.sh"]
 CMD ["/bin/bash", "/cmd.sh"]
