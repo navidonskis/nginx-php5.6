@@ -14,3 +14,5 @@ chmod 600 /etc/cron.d/crontasks
 crontab /etc/cron.d/crontasks
 
 cron -f
+
+./cmd.sh
