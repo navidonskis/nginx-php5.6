@@ -102,5 +102,6 @@ RUN chmod +x /cron.sh
 # Expose Ports
 EXPOSE 80
 
-ENTRYPOINT ["/cron.sh"]
 CMD ["/bin/bash", "/cmd.sh"]
+
+ENTRYPOINT ["/cron.sh"]
