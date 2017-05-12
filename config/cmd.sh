@@ -21,7 +21,7 @@ chown -Rf www-data.www-data $NGINX_ROOT
 set -e
 
 # if commands are entered for crontab - check it
-if [ -n "$1" ]; then
+if [ $# -gt 0 ]; then
   args=("$@")
   argn=$#
 
