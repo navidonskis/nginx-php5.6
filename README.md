@@ -60,7 +60,7 @@ post_max_size = 100M
 # set our own ...
 ```
 
- 5. Set your own cronjob tasks just entering as new entry. Below are an explanation how to use cron. All added entries of commands will be placed at `/etc/cron.d/crontasks` and will be initialized via `crontab`. Type `crontab -e` at container to see your entries. (http://crontab-generator.org/)[http://crontab-generator.org/].
+ 5. Set your own cronjob tasks just entering as new entry. Below are an explanation how to use cron. All added entries of commands will be placed at `/etc/cron.d/crontasks` and will be initialized via `crontab`. Type `crontab -e` at container to see your entries. [http://crontab-generator.org/](http://crontab-generator.org/).
 
 ```
 *     *     *   *    *        command to be executed
