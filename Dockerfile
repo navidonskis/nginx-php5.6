@@ -65,43 +65,32 @@ RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php/5.6/fpm/php.
 # Ownership of sock file for PHP-FPM
 RUN sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php/5.6/fpm/pool.d/www.conf && \
 	find /etc/php/5.6/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \; && \
-	mkdir /run/php
-
-# mcrypt configuration
-RUN phpenmod mcrypt
-
-# nginx site conf
-# Nginx site configuration
-RUN rm -Rf /etc/nginx/conf.d/* && \
+	mkdir /run/php && \
+	# mcrypt configuration
+	phpenmod mcrypt && \
+	# Nginx site configuration
+	rm -Rf /etc/nginx/conf.d/* && \
 	rm -Rf /etc/nginx/sites-available/default && \
-	mkdir -p /etc/nginx/ssl/
+	mkdir -p /etc/nginx/ssl/ && \
+	# create workdir directory
+	mkdir -p /var/www
 
 COPY ./config/nginx/nginx.conf /etc/nginx/sites-available/default.conf
-
-RUN rm -f /etc/nginx/sites-enabled/default && \
-	ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default
-
 # Supervisor Config
 COPY ./config/supervisor/supervisord.conf /etc/supervisord.conf
-
 # Start Supervisord
 COPY ./config/cmd.sh /
-RUN chmod 755 /cmd.sh
-
-# mount www directory to as a workdir
-RUN mkdir -p /var/www
+# mount www directory as a workdir
 COPY ./www/ /var/www
-RUN chown -Rf www-data.www-data /var/www
 
-# default cronjob file
-ADD ./config/cron.d/crontasks /etc/cron.d/crontasks
-COPY ./config/cron.sh /
-RUN touch /var/log/cron.log
-RUN chmod +x /cron.sh
+RUN rm -f /etc/nginx/sites-enabled/default && \
+	ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default && \
+	chmod 755 /cmd.sh && \
+	chown -Rf www-data.www-data /var/www && \
+	touch /var/log/cron.log && \
+	touch /etc/cron.d/crontasks
 
 # Expose Ports
 EXPOSE 80
 
-CMD ["/bin/bash", "/cmd.sh"]
-
-ENTRYPOINT ["/cron.sh"]
+ENTRYPOINT ["/bin/bash", "/cmd.sh"]
