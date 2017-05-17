@@ -2,6 +2,8 @@
 
 Docker container based on `Ubuntu 14.04.5` version. Using `nginx stable` version with `php 5.6`. This is simple container for my own personally purpose. If you have an idea how to improve it, contact me <donatas@navidonskis.com>.
 
+Need PHP 7.1 ? [https://github.com/navidonskis/nginx-php7.1](https://github.com/navidonskis/nginx-php7.1).
+
 ## Includes packages
 
  * nginx, ssmtp, memcached, curl, pwgen, supervisor
